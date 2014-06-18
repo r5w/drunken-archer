@@ -13,26 +13,37 @@ function init(w, h) {
 		howHigh = h,
 		bg = s.rect(0, 0, howWide, howHigh),
 		i,
+/*		colours = [
+			"#111111", //blue
+			"#556270", //rose
+			"#4ECDC4", //bronze
+			"#C7F464", //pale grey
+			"#FF6B6B", //dark grey
+			"#C44D58", //black
+			"#EB6841"  //cream
+		],
+*/
 		colours = [
-			"#111111",
-			"#556270",
-			"#4ECDC4",
-			"#C7F464",
-			"#FF6B6B",
-			"#C44D58",
-			"#EB6841"
+			//"#758b98", // sky blue
+			"#6a8798", //blue
+			"#9c2b27", //rose
+			"#4c3d2a", //bronze
+			"#a1a29d", //pewter
+			"#393937", //charcoal
+			"#1c1c1a", //black
+			"#dcceab"  //cream
 		],
 		numberOfSides = colours.length,
 		size = howWide / 13.333,
-		Xcentre = (bg.getBBox().width) / 2,
-		Ycentre = (bg.getBBox().height) / 2,
+		Xcentre = float2int( (bg.getBBox().width) / 2 ),
+		Ycentre = float2int( (bg.getBBox().height) / 2 ),
 		bigCircle,
 		dotgroup,
 		newpointX,
 		newpointY,
 		papergroup;
 	//bg = s.rect(0, 0, 400, 400);
-	bg.attr({fill: '#ddd'});
+	bg.attr({fill: '#fff'});
 			/*
 		bigCircle.drag();
 		var mediumCircle = s.circle(100,150,75);
@@ -52,11 +63,11 @@ function init(w, h) {
 		//mediumCircle.drag();
 */
 	console.log(Xcentre);
-	bigCircle = s.circle(Xcentre, Ycentre, (size * 2));
+	bigCircle = s.circle(Xcentre, Ycentre, (size * 4.5));
 	bigCircle.attr({
-		fill: 'red',
-		stroke: 'white',
-		strokeWidth: 4
+		fill: '#fff',
+		stroke: '#eee',
+		strokeWidth: 2
 	});
 	bigCircle.click(function () {
 		printmessage(this.node.r.baseVal.value);
@@ -65,6 +76,9 @@ function init(w, h) {
 	dotgroup = [];
 	papergroup = s.g();
 
+	function float2int (value) {
+		return value | 0;
+	}
 	function dotclickhandle(e, thing) {
 		return function (thing) {
 			//var data = e.data;
