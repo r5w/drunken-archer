@@ -67,7 +67,7 @@ function init(w, h) {
 */
 	console.log(Xcentre);
 	bigCircle = s.circle(Xcentre, Ycentre, (size * 4.5));
-	cursor = s.circle(Xcentre + size * 3, Ycentre, (size / 2));
+	cursor = s.circle(Xcentre + size * 5, Ycentre, size);
 	bigCircle.attr({
 		fill: '#fff',
 		stroke: '#eee',
@@ -86,7 +86,7 @@ function init(w, h) {
 
 
 
-    cursorg = s.g( bigCircle, cursor);	
+	cursorg = s.g( bigCircle, cursor);	
 	dotgroup = [];
 	newPointArr = [];
 	papergroup = s.g();
@@ -99,17 +99,43 @@ function init(w, h) {
 		//currenty = cursorg.cy;
 		//cursor.attr({cx:x,cy:y});
 		//cursorg.attr({cx:x,cy:y});
-		cursorg.animate({transform: 'r360, x, y'}, 500, mina.easeinout);
+		//cursorg.animate({transform: 'r360, x, y'}, 500, mina.easeinout);
+		chosen(180);
 	}
+
+	function chosen(a) {
+		console.log("chosenangle is" + a);
+						//a = (a + numberOfSides) % 360;
+						//a = (a + 1080) % 360;
+						//angle = a;
+
+						var to = "r" + [a, Xcentre, Ycentre];
+						cursorg.animate({
+							transform: to
+						}, 500, mina.easeinout);
+						cursorg.attr({'rx':a});
+					}	
 	function dotclickhandle(e, thing) {
+		//var angle = e * 2 * Math.PI ;
+		var currentangle,angle;
+		currentangle = cursorg.attr("rx");
+		console.log("currnangle::"+currentangle);
+
+		 angle =  e * ( 360 / numberOfSides);
+		// if (angle>180) { 
+		// 	angle = 360-angle;
+		// 	} 
 		return function (thing) {
+		console.log("currnangle::"+currentangle);
 			//var data = e.data;
 			//alert(e.data);
-
+			console.log("angle::"+angle);
 			console.log(thing.target.cx.baseVal.value);
 			console.log(e + "x:" + dotgroup[e].thisx + "y:" + dotgroup[e].thisy);
 			//console.log("cursor"+c);
-			setCursorPoint(dotgroup[e].thisx,dotgroup[e].thisy);
+			//setCursorPoint(dotgroup[e].thisx,dotgroup[e].thisy);
+
+			chosen(angle);
 			//	var thisx = elem.target.cx.baseVal.value;
 			//	var thisy = elem.target.cy.baseVal.value;
 			//	var thisid = this.id;
@@ -167,13 +193,13 @@ function init(w, h) {
 		papergroup.add(dotgroup[i]);
 		//console.log(dotgroup[i]);
 	}
-	papergroup.animate({transform: 'r360, Xcentre, Ycentre'}, 2000, mina.easeinout);
-	papergroup.drag();
+	//papergroup.animate({transform: 'r360, Xcentre, Ycentre'}, 2000, mina.easeinout);
+	//papergroup.drag();
 }
 //window.onload = init;
 jQuery(document).ready(function ($) {
-    "use strict";
-    var svgsize = $('#svg').width();
-    //console.log(svgsize);
-    init(svgsize, svgsize);
+	"use strict";
+	var svgsize = $('#svg').width();
+	//console.log(svgsize);
+	init(svgsize, svgsize);
 });
